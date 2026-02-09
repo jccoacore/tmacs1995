@@ -155,18 +155,28 @@ if (!/^\+?[0-9]{7,15}$/.test(normalizedMobile)) {
 
   const subject = "Confirmation of Intention to Join Society Under TMACS Act, 1995";
 
-  const body =
+ const body =
 `To
 The President
-Jain’s Carlton Creek Flat Owners Association Society, Reg No 1132/2015
+Jain’s Carlton Creek Flat Owners Association society, Reg No 1132/2015
 
 Sir,
 
-I am the owner of Flat No. ${flat} in Block ${block}. I know that the General Body of the Association passed a resolution on 7th December 2025 to register a society under Telangana Mutually Aided Co-operative Societies Act, 1995. I fully endorse the said resolution.
+Sub: Confirmation of our intention to join in the society to be formed under Telangana Mutually Aided Co-operative Societies Act, 1995 (TMACS) 
+but not under The Telangana Co-Operative Societies Act, 1964
 
-I have no intention to join any society registered under The Telangana Co-Operative Societies Act, 1964.
+I am the owner of Flat No. ${flat} in ${block} Block. I know that the General Body of the Association passed a resolution on 7th December 2025 
+to register a society under Telangana Mutually Aided Co-operative Societies (TMACS) Act, 1995 as the same is desirable. 
+I fully endorse the GBM resolution dated 7th December 2025 of Jain's Carlton Creek Flat Owners Association society, Reg No 1132/2015 
+and I couldn’t attend the GBM personally dated 7th December 2025.
 
-Kindly take on record my consent for registration of the society under Telangana Mutually Aided Co-operative Societies (TMACS) Act, 1995.
+I know that certain persons to create trouble have registered a society Jains Carlton Creek Flat Owners Maintenance Cooperative Society Limited (JCCFOMCSL), 
+Reg No: TG/RRD/TCS/2025-62/FOW & M under The Telangana Co-Operative Societies Act, 1964, which has no approval of the General Body and 
+majority of the flat owners. I have no intention to join the society Jains Carlton Creek Flat Owners Maintenance Cooperative Society Limited (JCCFOMCSL), 
+Reg No: TG/RRD/TCS/2025-62/FOW & M registered under The Telangana Co-Operative Societies Act, 1964. I am aware that it is desirable to register 
+and operate under the Telangana Mutually Aided Co-operative Societies (TMACS) Act, 1995 as the same will be beneficial with less interference from the concerned authorities.
+
+Kindly, take on record my consent for registration of society under Telangana Mutually Aided Co-operative Societies (TMACS) Act, 1995.
 
 Yours Faithfully,
 
@@ -175,6 +185,7 @@ Flat No: ${flat}
 Block: ${block}
 Email: ${email}
 Mobile: ${normalizedMobile}`;
+
 
   const mailtoLink =
     "mailto:jccoa.core@gmail.com" +

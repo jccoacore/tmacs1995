@@ -1,52 +1,69 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Send Consent Email</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .card {
-      background: #ffffff;
-      padding: 24px;
-      max-width: 420px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 16px;
-      padding: 12px 18px;
-      background: #1a73e8;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 16px;
-    }
-    .note {
-      margin-top: 14px;
-      font-size: 13px;
-      color: #555;
-    }
-  </style>
 </head>
 
-<body>
-  <div class="card">
+<body style="font-family: Arial, sans-serif; background:#f7f7f7;">
+
+  <div style="
+    max-width:420px;
+    margin:100px auto;
+    padding:24px;
+    background:#ffffff;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    text-align:center;
+  ">
     <h2>Send Consent Email</h2>
+
     <p>
       Click the button below to open your email app with the consent letter pre-filled.
     </p>
 
-    <a class="btn"
-       href="mailto:jccoa.core@gmail.com?subject=Confirmation%20of%20Intention%20to%20Join%20Society%20Under%20TMACS%20Act%2C%201995&body=To%0AThe%20President%0AJain%E2%80%99s%20Carlton%20Creek%20Flat%20Owners%20Association%20Society%2C%20Reg%20No%201132%2F2015%0A%
+    <form action="mailto:jccoa.core@gmail.com" method="GET">
+      <input type="hidden" name="subject"
+             value="Confirmation of Intention to Join Society Under TMACS Act, 1995">
+
+      <input type="hidden" name="body"
+             value="To
+The President
+Jain’s Carlton Creek Flat Owners Association Society, Reg No 1132/2015
+
+Sir,
+
+I am the owner of Flat No. _______ in ____ Block. I fully endorse the GBM resolution dated 7th December 2025.
+
+Kindly take on record my consent for registration under Telangana Mutually Aided Co-operative Societies (TMACS) Act, 1995.
+
+Yours Faithfully,
+Name:
+Flat No:
+Block:
+Email ID:
+Signature:">
+
+      <button type="submit"
+              style="
+                margin-top:20px;
+                padding:14px 18px;
+                font-size:16px;
+                background:#1a73e8;
+                color:#ffffff;
+                border:none;
+                border-radius:6px;
+                cursor:pointer;
+              ">
+        Open Email App
+      </button>
+    </form>
+
+    <p style="margin-top:14px; font-size:13px; color:#555;">
+      If nothing happens, ensure an email app is configured on your device.
+    </p>
+  </div>
+
+</body>
+</html>

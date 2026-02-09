@@ -23,17 +23,17 @@
 
     .card {
       background: #ffffff;
-      max-width: 580px;
+      max-width: 900px;
       width: 100%;
       padding: 28px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
     }
 
     h1 {
       text-align: center;
-      font-size: 22px;
-      margin-bottom: 18px;
+      font-size: 24px;
+      margin-bottom: 22px;
       color: #202124;
     }
 
@@ -53,33 +53,80 @@
       border: 1px solid #ccc;
     }
 
-    .btn {
-      margin-top: 18px;
+    /* Two-column action row */
+    .action-row {
+      display: grid;
+      grid-template-columns: 60% 40%;
+      gap: 20px;
+      margin-top: 28px;
+    }
+
+    .primary-box {
+      background: #e8f0fe;
+      border-radius: 10px;
+      padding: 22px;
+      text-align: center;
+      border: 2px solid #1a73e8;
+    }
+
+    .primary-box h2 {
+      margin-top: 0;
+      color: #1a73e8;
+      font-size: 18px;
+    }
+
+    .primary-btn {
+      margin-top: 16px;
       width: 100%;
-      padding: 14px;
+      padding: 16px;
       background: #1a73e8;
       color: #ffffff;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
+      border-radius: 8px;
+      font-size: 18px;
       font-weight: bold;
       cursor: pointer;
     }
 
-    .btn.secondary {
-      background: #5f6368;
-      margin-top: 10px;
+    .primary-btn:hover {
+      background: #155ab6;
     }
 
-    .btn:hover {
-      opacity: 0.9;
+    .fallback-box {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 20px;
+      border-left: 5px solid #9aa0a6;
     }
 
-    .note {
-      margin-top: 14px;
-      font-size: 13px;
+    .fallback-box h3 {
+      margin-top: 0;
+      font-size: 16px;
+      color: #444;
+    }
+
+    .fallback-steps {
+      font-size: 14px;
       color: #555;
-      text-align: center;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .fallback-btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      background: #5f6368;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .fallback-btn:hover {
+      opacity: 0.9;
     }
 
     textarea {
@@ -90,6 +137,19 @@
       border-radius: 4px;
       border: 1px solid #ccc;
       display: none;
+    }
+
+    .note {
+      margin-top: 18px;
+      font-size: 13px;
+      color: #666;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .action-row {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -121,19 +181,41 @@
     <label>Mobile Number</label>
     <input id="mobile" type="text" placeholder="+CountryCodeMobileNumber">
 
-    <button class="btn" onclick="openEmail()">Open Email App</button>
-    <button class="btn secondary" onclick="copySubject()">Copy Subject</button>
-    <button class="btn secondary" onclick="copyEmail()">Copy Email Content</button>
+    <!-- ACTION ROW -->
+    <div class="action-row">
+
+      <!-- PRIMARY COLUMN -->
+      <div class="primary-box">
+        <h2>📧 Send via Email App (Recommended)</h2>
+        <p>
+          This works automatically on most mobiles and computers.
+        </p>
+        <button class="primary-btn" onclick="openEmail()">
+          Open Email App
+        </button>
+      </div>
+
+      <!-- FALLBACK COLUMN -->
+      <div class="fallback-box">
+        <h3>⚠️ Don’t have an email app?</h3>
+        <div class="fallback-steps">
+          If clicking <strong>Open Email App</strong> does nothing:
+          <br>1) Copy the <strong>Subject</strong>
+          <br>2) Copy the <strong>Email Content</strong>
+          <br>3) Paste into <strong>Gmail / Outlook</strong> and send
+        </div>
+
+        <button class="fallback-btn" onclick="copySubject()">Copy Subject</button>
+        <button class="fallback-btn" onclick="copyEmail()">Copy Email Content</button>
+      </div>
+
+    </div>
 
     <textarea id="preview" rows="14" readonly></textarea>
 
     <div class="note">
-      If your computer/Mobile does not have an email app configured:
-      <br>1) Copy the <strong>Subject</strong>
-      <br>2) Copy the <strong>Email Content</strong>
-      <br>3) Paste into Gmail / Outlook and send
-      <br><br>
       This page does not store or transmit any information.
+      The email is sent directly from your device.
     </div>
 
   </div>
@@ -153,16 +235,16 @@ function validateInputs() {
   if (!/^[A-Za-z ]+$/.test(name)) return alert("Name must contain only alphabets and spaces.");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return alert("Please enter a valid email.");
   if (!/^\+?[0-9]{7,15}$/.test(mobile))
-    return alert("Please enter a valid mobile number (with country code if applicable).");
+    return alert("Please enter a valid mobile number.");
 
   return { block, flat, name, email, mobile };
 }
 
-function buildSubject(data) {
-  return `[JCC-${data.block}-${data.flat}] Confirmation of our intention to join society under TMACS Act, 1995`;
+function buildSubject(d) {
+  return `[JCC-${d.block}-${d.flat}] Confirmation of our intention to join society under TMACS Act, 1995`;
 }
 
-function buildBody(data, subject) {
+function buildBody(d, subject) {
   return `Subject: ${subject}
 
 To
@@ -173,7 +255,7 @@ Sir,
 
 Sub: Confirmation of our intention to join in the society to be formed under Telangana Mutually Aided Co-operative Societies Act, 1995 (TMACS) but not under The Telangana Co-Operative Societies Act, 1964
 
-I am the owner of Flat No. ${data.flat} in ${data.block} Block. I know that the General Body of the Association passed a resolution on 7th December 2025 to register a society under Telangana Mutually Aided Co-operative Societies (TMACS) Act, 1995 as the same is desirable. I fully endorse the GBM resolution dated 7th December 2025 of Jain's Carlton Creek Flat Owners Association society, Reg No 1132/2015 and I couldn’t attend the GBM personally dated 7th December 2025.
+I am the owner of Flat No. ${d.flat} in ${d.block} Block. I know that the General Body of the Association passed a resolution on 7th December 2025 to register a society under Telangana Mutually Aided Co-operative Societies (TMACS) Act, 1995 as the same is desirable. I fully endorse the GBM resolution dated 7th December 2025 of Jain's Carlton Creek Flat Owners Association society, Reg No 1132/2015 and I couldn’t attend the GBM personally dated 7th December 2025.
 
 I know that certain persons to create trouble have registered a society Jains Carlton Creek Flat Owners Maintenance Cooperative Society Limited (JCCFOMCSL), Reg No: TG/RRD/TCS/2025-62/FOW & M under The Telangana Co-Operative Societies Act, 1964, which has no approval of the General Body and majority of the flat owners. I have no intention to join the society Jains Carlton Creek Flat Owners Maintenance Cooperative Society Limited (JCCFOMCSL), Reg No: TG/RRD/TCS/2025-62/FOW & M registered under The Telangana Co-Operative Societies Act, 1964. I am aware that it is desirable to register and operate under the Telangana Mutually Aided Co-operative Societies (TMACS) Act, 1995 as the same will be beneficial with less interference from the concerned authorities.
 
@@ -181,53 +263,47 @@ Kindly, take on record my consent for registration of society under Telangana Mu
 
 Yours Faithfully,
 
-Name: ${data.name}
-Flat No: ${data.flat}
-Block: ${data.block}
-Email: ${data.email}
-Mobile: ${data.mobile}`;
+Name: ${d.name}
+Flat No: ${d.flat}
+Block: ${d.block}
+Email: ${d.email}
+Mobile: ${d.mobile}`;
 }
 
 function openEmail() {
-  const data = validateInputs();
-  if (!data) return;
+  const d = validateInputs();
+  if (!d) return;
 
-  const subject = buildSubject(data);
-  const body = buildBody(data, subject);
+  const subject = buildSubject(d);
+  const body = buildBody(d, subject);
 
-  const mailto =
+  window.location.href =
     "mailto:jccoa.core@gmail.com" +
     "?subject=" + encodeURIComponent(subject) +
     "&body=" + encodeURIComponent(body);
-
-  window.location.href = mailto;
 }
 
 function copySubject() {
-  const data = validateInputs();
-  if (!data) return;
+  const d = validateInputs();
+  if (!d) return;
 
-  const subject = buildSubject(data);
-  navigator.clipboard.writeText(subject).then(() => {
-    alert("Subject copied. Paste it into the email Subject field.");
-  });
+  navigator.clipboard.writeText(buildSubject(d))
+    .then(() => alert("Subject copied. Paste it into the email Subject field."));
 }
 
 function copyEmail() {
-  const data = validateInputs();
-  if (!data) return;
+  const d = validateInputs();
+  if (!d) return;
 
-  const subject = buildSubject(data);
-  const body = buildBody(data, subject);
+  const subject = buildSubject(d);
+  const body = buildBody(d, subject);
 
-  const fullText =
-`To: jccoa.core@gmail.com
-${body}`;
+  const text = `To: jccoa.core@gmail.com\n\n${body}`;
 
-  navigator.clipboard.writeText(fullText).then(() => {
-    alert("Email content copied. Paste it into Gmail or Outlook.");
+  navigator.clipboard.writeText(text).then(() => {
+    alert("Email content copied. Paste it into Gmail / Outlook.");
     document.getElementById("preview").style.display = "block";
-    document.getElementById("preview").value = fullText;
+    document.getElementById("preview").value = text;
   });
 }
 </script>

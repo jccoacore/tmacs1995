@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Send Consent Email</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      max-width: 520px;
+      width: 100%;
+      padding: 28px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 18px;
+      font-size: 22px;
+      color: #202124;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: bold;
+      display: block;
+      margin-top: 12px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    .btn {
+      margin-top: 22px;
+      width: 100%;
+      padding: 14px;
+      background: #1a73e8;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #155ab6;
+    }
+
+    .note {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #555;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Send Consent Email</h1>
+
+      <label for="block">Block</label>
+      <select id="block">
+        <option value="">Select Block</option>
+        <option>A</option><option>B</option><option>C</option>
+        <option>D</option><option>E</option><option>F</option>
+        <option>G</option><option>H</option><option>I</option>
+        <option>J</option><option>K</option>
+      </select>
+
+      <label for="flat">Flat Number</label>
+      <input id="flat" type="text" placeholder="Numbers only">
+
+      <label for="name">Full Name</label>
+      <input id="name" type="text" placeholder="Alphabets only">
+
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="example@email.com">
+
+      <label for="mobile">Mobile Number</label>
+      <input id="mobile" type="text" placeholder="+CountryCodeMobileNumber">
+
+
+      <button class="btn" onclick="sendEmail()">Open Email App</button>
+
+      <div class="note">
+        This page does not store or transmit any data.  
+        The email will be sent directly from your device.
+      </div>
+    </div>
+  </div>
+
+<script>
+function sendEmail() {
+  const block = document.getElementById("block").value;
+  const flat = document.getElementById("flat").value.trim();
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+
+  // Validations
+  if (!block) {
+    alert("Please select a Block.");
+    return;
+  }
+
+  if (!/^[0-9]+$/.test(flat)) {
+    alert("Flat number must contain only numbers.");
+    return;
+  }
+
+  if (!/^[A-Za-z ]+$/.test(name)) {
+    alert("Name must contain only alphabets and spaces.");
+    return;
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    alert("Please enter a valid email address.");
+    return;
+  }
+  
+  const normalizedMobile = mobile.replace(/[\s\-]/g, "");
+
+// International mobile validation (E.164 compatible)
+if (!/^\+?[0-9]{7,15}$/.test(normalizedMobile)) {
+  alert("Please enter a valid mobile number with country code if applicable.");
+  return;
+}
+
+
+  const subject = "Confirmation of Intention to Join Society Under TMACS Act, 1995";
+
+  const body =
+`To
+The President
+Jain’s Carlton Creek Flat Owners Association Society, Reg No 1132/2015
+
+Sir,
+
+I am the owner of Flat No. ${flat} in Block ${block}. I know that the General Body of the Association passed a resolution on 7th December 2025 to register a society under Telangana Mutually Aided Co-operative Societies Act, 1995. I fully endorse the said resolution.
+
+I have no intention to join any society registered under The Telangana Co-Operative Societies Act, 1964.
+
+Kindly take on record my consent for registration of the society under Telangana Mutually Aided Co-operative Societies (TMACS) Act, 1995.
+
+Yours Faithfully,
+
+Name: ${name}
+Flat No: ${flat}
+Block: ${block}
+Email: ${email}
+Mobile: ${normalizedMobile}`;
+
+  const mailtoLink =
+    "mailto:jccoa.core@gmail.com" +
+    "?subject=" + encodeURIComponent(subject) +
+    "&body=" + encodeURIComponent(body);
+
+  window.location.href = mailtoLink;
+}
+</script>
+
+</body>
+</html>

@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>JCCFOA - Send Consent Email to move Society reg to TMACS 1995 ACT</title>
+  <title>Send Consent Email</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
+
   <style>
     body {
       font-family: Arial, Helvetica, sans-serif;
@@ -23,7 +23,7 @@
 
     .card {
       background: #ffffff;
-      max-width: 520px;
+      max-width: 580px;
       width: 100%;
       padding: 28px;
       border-radius: 10px;
@@ -32,8 +32,8 @@
 
     h1 {
       text-align: center;
-      margin-bottom: 18px;
       font-size: 22px;
+      margin-bottom: 18px;
       color: #202124;
     }
 
@@ -54,7 +54,7 @@
     }
 
     .btn {
-      margin-top: 22px;
+      margin-top: 18px;
       width: 100%;
       padding: 14px;
       background: #1a73e8;
@@ -66,8 +66,13 @@
       cursor: pointer;
     }
 
+    .btn.secondary {
+      background: #5f6368;
+      margin-top: 10px;
+    }
+
     .btn:hover {
-      background: #155ab6;
+      opacity: 0.9;
     }
 
     .note {
@@ -76,123 +81,154 @@
       color: #555;
       text-align: center;
     }
+
+    textarea {
+      width: 100%;
+      margin-top: 12px;
+      font-size: 13px;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      display: none;
+    }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <div class="card">
-      <h1>JCCFOA - Consent Email to move Society reg to TMACS 1995 ACT </h1>
+<div class="container">
+  <div class="card">
 
-      <label for="block">Block</label>
-      <select id="block">
-        <option value="">Select Block</option>
-        <option>A</option><option>B</option><option>C</option>
-        <option>D</option><option>E</option><option>F</option>
-        <option>G</option><option>H</option><option>I</option>
-        <option>J</option><option>K</option>
-      </select>
+    <h1>Send Consent Email</h1>
 
-      <label for="flat">Flat Number</label>
-      <input id="flat" type="text" placeholder="Numbers only">
+    <label>Block</label>
+    <select id="block">
+      <option value="">Select Block</option>
+      <option>A</option><option>B</option><option>C</option>
+      <option>D</option><option>E</option><option>F</option>
+      <option>G</option><option>H</option><option>I</option>
+      <option>J</option><option>K</option>
+    </select>
 
-      <label for="name">Full Name</label>
-      <input id="name" type="text" placeholder="Alphabets only">
+    <label>Flat Number</label>
+    <input id="flat" type="text" placeholder="Numbers only">
 
-      <label for="email">Registered Email Address with JCCFOA</label>
-      <input id="email" type="email" placeholder="example@email.com">
+    <label>Full Name</label>
+    <input id="name" type="text" placeholder="Alphabets only">
 
-      <label for="mobile">Mobile Number</label>
-      <input id="mobile" type="text" placeholder="+CountryCodeMobileNumber">
+    <label>Email</label>
+    <input id="email" type="email" placeholder="example@email.com">
 
+    <label>Mobile Number</label>
+    <input id="mobile" type="text" placeholder="+CountryCodeMobileNumber">
 
-      <button class="btn" onclick="sendEmail()">Open Email App</button>
+    <button class="btn" onclick="openEmail()">Open Email App</button>
+    <button class="btn secondary" onclick="copySubject()">Copy Subject</button>
+    <button class="btn secondary" onclick="copyEmail()">Copy Email Content</button>
 
-      <div class="note">
-        This page does not store or transmit any data.  
-        The email will be sent directly from your device.
-      </div>
+    <textarea id="preview" rows="14" readonly></textarea>
+
+    <div class="note">
+      If your computer/Mobile does not have an email app configured:
+      <br>1) Copy the <strong>Subject</strong>
+      <br>2) Copy the <strong>Email Content</strong>
+      <br>3) Paste into Gmail / Outlook and send
+      <br><br>
+      This page does not store or transmit any information.
     </div>
+
   </div>
+</div>
 
 <script>
-function sendEmail() {
+function validateInputs() {
   const block = document.getElementById("block").value;
   const flat = document.getElementById("flat").value.trim();
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
-  const mobile = document.getElementById("mobile").value.trim();
+  const mobileRaw = document.getElementById("mobile").value.trim();
+  const mobile = mobileRaw.replace(/[\s\-]/g, "");
 
-  // Validations
-  if (!block) {
-    alert("Please select a Block.");
-    return;
-  }
+  if (!block) return alert("Please select a Block.");
+  if (!/^[0-9]+$/.test(flat)) return alert("Flat number must contain only numbers.");
+  if (!/^[A-Za-z ]+$/.test(name)) return alert("Name must contain only alphabets and spaces.");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return alert("Please enter a valid email.");
+  if (!/^\+?[0-9]{7,15}$/.test(mobile))
+    return alert("Please enter a valid mobile number (with country code if applicable).");
 
-  if (!/^[0-9]+$/.test(flat)) {
-    alert("Flat number must contain only numbers.");
-    return;
-  }
-
-  if (!/^[A-Za-z ]+$/.test(name)) {
-    alert("Name must contain only alphabets and spaces.");
-    return;
-  }
-
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    alert("Please enter a valid email address.");
-    return;
-  }
-  
-  const normalizedMobile = mobile.replace(/[\s\-]/g, "");
-
-// International mobile validation (E.164 compatible)
-if (!/^\+?[0-9]{7,15}$/.test(normalizedMobile)) {
-  alert("Please enter a valid mobile number with country code if applicable.");
-  return;
+  return { block, flat, name, email, mobile };
 }
 
+function buildSubject(data) {
+  return `[JCC-${data.block}-${data.flat}] Confirmation of our intention to join society under TMACS Act, 1995`;
+}
 
-  const subject = "Confirmation of Intention to Join Society Under TMACS Act, 1995";
+function buildBody(data, subject) {
+  return `Subject: ${subject}
 
- const body =
-`To
+To
 The President
 Jain’s Carlton Creek Flat Owners Association society, Reg No 1132/2015
 
 Sir,
 
-Sub: Confirmation of our intention to join in the society to be formed under Telangana Mutually Aided Co-operative Societies Act, 1995 (TMACS) 
-but not under The Telangana Co-Operative Societies Act, 1964
+Sub: Confirmation of our intention to join in the society to be formed under Telangana Mutually Aided Co-operative Societies Act, 1995 (TMACS) but not under The Telangana Co-Operative Societies Act, 1964
 
-I am the owner of Flat No. ${flat} in ${block} Block. I know that the General Body of the Association passed a resolution on 7th December 2025 
-to register a society under Telangana Mutually Aided Co-operative Societies (TMACS) Act, 1995 as the same is desirable. 
-I fully endorse the GBM resolution dated 7th December 2025 of Jain's Carlton Creek Flat Owners Association society, Reg No 1132/2015 
-and I couldn’t attend the GBM personally dated 7th December 2025.
+I am the owner of Flat No. ${data.flat} in ${data.block} Block. I know that the General Body of the Association passed a resolution on 7th December 2025 to register a society under Telangana Mutually Aided Co-operative Societies (TMACS) Act, 1995 as the same is desirable. I fully endorse the GBM resolution dated 7th December 2025 of Jain's Carlton Creek Flat Owners Association society, Reg No 1132/2015 and I couldn’t attend the GBM personally dated 7th December 2025.
 
-I know that certain persons to create trouble have registered a society Jains Carlton Creek Flat Owners Maintenance Cooperative Society Limited (JCCFOMCSL), 
-Reg No: TG/RRD/TCS/2025-62/FOW & M under The Telangana Co-Operative Societies Act, 1964, which has no approval of the General Body and 
-majority of the flat owners. I have no intention to join the society Jains Carlton Creek Flat Owners Maintenance Cooperative Society Limited (JCCFOMCSL), 
-Reg No: TG/RRD/TCS/2025-62/FOW & M registered under The Telangana Co-Operative Societies Act, 1964. I am aware that it is desirable to register 
-and operate under the Telangana Mutually Aided Co-operative Societies (TMACS) Act, 1995 as the same will be beneficial with less interference from the concerned authorities.
+I know that certain persons to create trouble have registered a society Jains Carlton Creek Flat Owners Maintenance Cooperative Society Limited (JCCFOMCSL), Reg No: TG/RRD/TCS/2025-62/FOW & M under The Telangana Co-Operative Societies Act, 1964, which has no approval of the General Body and majority of the flat owners. I have no intention to join the society Jains Carlton Creek Flat Owners Maintenance Cooperative Society Limited (JCCFOMCSL), Reg No: TG/RRD/TCS/2025-62/FOW & M registered under The Telangana Co-Operative Societies Act, 1964. I am aware that it is desirable to register and operate under the Telangana Mutually Aided Co-operative Societies (TMACS) Act, 1995 as the same will be beneficial with less interference from the concerned authorities.
 
 Kindly, take on record my consent for registration of society under Telangana Mutually Aided Co-operative Societies (TMACS) Act, 1995.
 
 Yours Faithfully,
 
-Name: ${name}
-Flat No: ${flat}
-Block: ${block}
-Email: ${email}
-Mobile: ${normalizedMobile}`;
+Name: ${data.name}
+Flat No: ${data.flat}
+Block: ${data.block}
+Email: ${data.email}
+Mobile: ${data.mobile}`;
+}
 
+function openEmail() {
+  const data = validateInputs();
+  if (!data) return;
 
-  const mailtoLink =
+  const subject = buildSubject(data);
+  const body = buildBody(data, subject);
+
+  const mailto =
     "mailto:jccoa.core@gmail.com" +
     "?subject=" + encodeURIComponent(subject) +
     "&body=" + encodeURIComponent(body);
 
-  window.location.href = mailtoLink;
+  window.location.href = mailto;
+}
+
+function copySubject() {
+  const data = validateInputs();
+  if (!data) return;
+
+  const subject = buildSubject(data);
+  navigator.clipboard.writeText(subject).then(() => {
+    alert("Subject copied. Paste it into the email Subject field.");
+  });
+}
+
+function copyEmail() {
+  const data = validateInputs();
+  if (!data) return;
+
+  const subject = buildSubject(data);
+  const body = buildBody(data, subject);
+
+  const fullText =
+`To: jccoa.core@gmail.com
+${body}`;
+
+  navigator.clipboard.writeText(fullText).then(() => {
+    alert("Email content copied. Paste it into Gmail or Outlook.");
+    document.getElementById("preview").style.display = "block";
+    document.getElementById("preview").value = fullText;
+  });
 }
 </script>
 

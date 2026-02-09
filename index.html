@@ -5,9 +5,6 @@
   <title>Send Consent Email</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description"
-        content="Open your email app with a pre-filled consent letter. No data is collected or stored on this website.">
-
   <style>
     body {
       font-family: Arial, Helvetica, sans-serif;
@@ -26,53 +23,58 @@
 
     .card {
       background: #ffffff;
-      max-width: 480px;
+      max-width: 520px;
       width: 100%;
       padding: 28px;
       border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
     }
 
     h1 {
+      text-align: center;
+      margin-bottom: 18px;
       font-size: 22px;
-      margin-bottom: 12px;
       color: #202124;
     }
 
-    p {
-      font-size: 15px;
-      color: #444;
-      line-height: 1.5;
-      margin-bottom: 16px;
+    label {
+      font-size: 14px;
+      font-weight: bold;
+      display: block;
+      margin-top: 12px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
     }
 
     .btn {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 14px 20px;
-      background-color: #1a73e8;
+      margin-top: 22px;
+      width: 100%;
+      padding: 14px;
+      background: #1a73e8;
       color: #ffffff;
-      text-decoration: none;
+      border: none;
+      border-radius: 6px;
       font-size: 16px;
       font-weight: bold;
-      border-radius: 6px;
+      cursor: pointer;
     }
 
     .btn:hover {
-      background-color: #155ab6;
+      background: #155ab6;
     }
 
     .note {
-      margin-top: 18px;
+      margin-top: 14px;
       font-size: 13px;
-      color: #666;
-    }
-
-    .footer {
-      margin-top: 12px;
-      font-size: 12px;
-      color: #888;
+      color: #555;
+      text-align: center;
     }
   </style>
 </head>
@@ -80,31 +82,108 @@
 <body>
   <div class="container">
     <div class="card">
-
       <h1>Send Consent Email</h1>
 
-      <p>
-        Click the button below to open your email application with the consent
-        letter already filled in.
-      </p>
+      <label for="block">Block</label>
+      <select id="block">
+        <option value="">Select Block</option>
+        <option>A</option><option>B</option><option>C</option>
+        <option>D</option><option>E</option><option>F</option>
+        <option>G</option><option>H</option><option>I</option>
+        <option>J</option><option>K</option>
+      </select>
 
-      <p class="note">
-        This page does <strong>not</strong> collect, store, or transmit any
-        information. The email will be sent directly from your own email app.
-      </p>
+      <label for="flat">Flat Number</label>
+      <input id="flat" type="text" placeholder="Numbers only">
 
-      <a class="btn"
-         href="mailto:jccoa.core@gmail.com
-?subject=Confirmation%20of%20Intention%20to%20Join%20Society%20Under%20TMACS%20Act%2C%201995
-&body=To%0AThe%20President%0AJain%E2%80%99s%20Carlton%20Creek%20Flat%20Owners%20Association%20Society%2C%20Reg%20No%201132%2F2015%0A%0ASir%2C%0A%0ASub%3A%20Confirmation%20of%20our%20intention%20to%20join%20in%20the%20society%20to%20be%20formed%20under%20Telangana%20Mutually%20Aided%20Co-operative%20Societies%20Act%2C%201995%20(TMAGS)%20but%20not%20under%20The%20Telangana%20Co-Operative%20Societies%20Act%2C%201964%0A%0AI%20am%20the%20owner%20of%20Flat%20No.%20________%20in%20____%20Block.%20I%20know%20that%20the%20General%20Body%20of%20the%20Association%20passed%20a%20resolution%20on%207th%20December%202025%20to%20register%20a%20society%20under%20Telangana%20Mutually%20Aided%20Co-operative%20Societies%20(TMAGS)%20Act%2C%201995%20as%20the%20same%20is%20desirable.%20I%20fully%20endorse%20the%20GBM%20resolution%20dated%207th%20December%202025%20of%20Jain%E2%80%99s%20Carlton%20Creek%20Flat%20Owners%20Association%20Society%2C%20Reg%20No%201132%2F2015.%20I%20could%20not%20attend%20the%20GBM%20personally%20held%20on%207th%20December%202025.%0A%0AI%20am%20aware%20that%20certain%20persons%20have%20registered%20a%20society%20named%20Jains%20Carlton%20Creek%20Flat%20Owners%20Maintenance%20Cooperative%20Society%20Limited%20(JCCFOMCSL)%2C%20Reg%20No%20TG%2FRRD%2FTCS%2F2025-62%2FFOW%20%26%20M%2C%20under%20The%20Telangana%20Co-Operative%20Societies%20Act%2C%201964%2C%20without%20approval%20of%20the%20General%20Body%20and%20majority%20of%20the%20flat%20owners.%20I%20have%20no%20intention%20to%20join%20the%20said%20society.%20I%20understand%20that%20registration%20under%20the%20Telangana%20Mutually%20Aided%20Co-operative%20Societies%20(TMAGS)%20Act%2C%201995%20is%20desirable%20and%20beneficial%20with%20less%20interference%20from%20the%20concerned%20authorities.%0A%0AKindly%20take%20on%20record%20my%20consent%20for%20registration%20of%20the%20society%20under%20Telangana%20Mutually%20Aided%20Co-operative%20Societies%20(TMAGS)%20Act%2C%201995.%0A%0AYours%20Faithfully%2C%0A%0AName%3A%20%0AFlat%20No%3A%20%0ABlock%3A%20%0AEmail%20ID%3A%20%Mobile%20ID%3A%20%0A%0ASignature%3A">
-        Open Email App
-      </a>
+      <label for="name">Full Name</label>
+      <input id="name" type="text" placeholder="Alphabets only">
 
-      <div class="footer">
-        Updated for resident use • No tracking • No data storage
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="example@email.com">
+
+      <label for="mobile">Mobile Number</label>
+      <input id="mobile" type="text" placeholder="+CountryCodeMobileNumber">
+
+
+      <button class="btn" onclick="sendEmail()">Open Email App</button>
+
+      <div class="note">
+        This page does not store or transmit any data.  
+        The email will be sent directly from your device.
       </div>
-
     </div>
   </div>
+
+<script>
+function sendEmail() {
+  const block = document.getElementById("block").value;
+  const flat = document.getElementById("flat").value.trim();
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+
+  // Validations
+  if (!block) {
+    alert("Please select a Block.");
+    return;
+  }
+
+  if (!/^[0-9]+$/.test(flat)) {
+    alert("Flat number must contain only numbers.");
+    return;
+  }
+
+  if (!/^[A-Za-z ]+$/.test(name)) {
+    alert("Name must contain only alphabets and spaces.");
+    return;
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    alert("Please enter a valid email address.");
+    return;
+  }
+  
+  const normalizedMobile = mobile.replace(/[\s\-]/g, "");
+
+// International mobile validation (E.164 compatible)
+if (!/^\+?[0-9]{7,15}$/.test(normalizedMobile)) {
+  alert("Please enter a valid mobile number with country code if applicable.");
+  return;
+}
+
+
+  const subject = "Confirmation of Intention to Join Society Under TMACS Act, 1995";
+
+  const body =
+`To
+The President
+Jain’s Carlton Creek Flat Owners Association Society, Reg No 1132/2015
+
+Sir,
+
+I am the owner of Flat No. ${flat} in Block ${block}. I know that the General Body of the Association passed a resolution on 7th December 2025 to register a society under Telangana Mutually Aided Co-operative Societies Act, 1995. I fully endorse the said resolution.
+
+I have no intention to join any society registered under The Telangana Co-Operative Societies Act, 1964.
+
+Kindly take on record my consent for registration of the society under Telangana Mutually Aided Co-operative Societies (TMACS) Act, 1995.
+
+Yours Faithfully,
+
+Name: ${name}
+Flat No: ${flat}
+Block: ${block}
+Email: ${email}
+Mobile: ${normalizedMobile}`;
+
+  const mailtoLink =
+    "mailto:jccoa.core@gmail.com" +
+    "?subject=" + encodeURIComponent(subject) +
+    "&body=" + encodeURIComponent(body);
+
+  window.location.href = mailtoLink;
+}
+</script>
+
 </body>
 </html>
